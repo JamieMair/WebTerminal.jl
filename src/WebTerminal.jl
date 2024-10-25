@@ -23,20 +23,28 @@ function default_project_dir()
 end
 
 function setup_project_env(project_dir)
-    Pkg.activate(project_dir)
-    Pkg.instantiate()
+    run_code = """
+    import Pkg;
+    Pkg.activate("$(project_dir)");
+    Pkg.instantiate();
     try
-        eval(Meta.parse("import WebTerminal"))
-        Pkg.update("WebTerminal", preserve=Pkg.PRESERVE_ALL)
-        Pkg.precompile()
+        eval(Meta.parse("import WebTerminal"));
+        Pkg.update("WebTerminal", preserve=Pkg.PRESERVE_ALL);
     catch
-        Pkg.add(url="https://github.com/JamieMair/WebTerminal.jl", rev="main")
-    end
-    
+        Pkg.add(url="https://github.com/JamieMair/WebTerminal.jl", rev="main");
+    end;
+    Pkg.precompile();
+    """
+
+    cmd = Cmd("julia --project=$(project_dir) --threads=auto -e '$(run_code)'", dir=project_dir)
+    run(cmd, wait=true)
+    nothing    
 end
 
 function start(; port::Int = 3000, threads=Threads.nthreads(), project_dir = default_project_dir())
     setup_project_env(project_dir)
+
+
 
     path = ttyd_path()
 
