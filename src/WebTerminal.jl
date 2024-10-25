@@ -1,5 +1,5 @@
 module WebTerminal
-
+using Pkg
 using Pkg.Artifacts
 
 function ttyd_path()
@@ -16,6 +16,34 @@ function ttyd_path()
     rootpath = artifact"WebTerminal"
     file = joinpath(rootpath, "bin", "ttyd")
     return file
+end
+
+function default_project_dir()
+    return joinpath(homedir(), ".juliawebterminal")
+end
+
+function setup_project_env(project_dir)
+    Pkg.activate(project_dir)
+    Pkg.instantiate()
+    try
+        eval(Meta.parse("import WebTerminal"))
+        Pkg.update("WebTerminal", preserve=Pkg.PRESERVE_ALL)
+        Pkg.precompile()
+    catch
+        Pkg.add(url="https://github.com/JamieMair/WebTerminal.jl", rev="main")
+    end
+    
+end
+
+function start(; port::Int = 3000, threads=Threads.nthreads(), project_dir = default_project_dir())
+    setup_project_env(project_dir)
+
+    path = ttyd_path()
+
+    cmd = Cmd(`$(path) --writable --port=$(port) julia --project="$(project_dir)" --threads=$(threads)`, dir=project_dir)
+    @info "Running server, press \"Ctrl+C\" to stop the server."
+    Base.run(cmd, wait=true)
+    return nothing
 end
 
 end
