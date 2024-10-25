@@ -1,0 +1,26 @@
+[[WebTerminal]]
+git-tree-sha1 = "d44a707d2901b2b74c4a96c0d5f5f72b0f891b36"
+os = "linux"
+arch = "x86_64"
+
+    [[WebTerminal.download]]
+    url = "https://github.com/JamieMair/WebTerminal.jl/releases/download/alpha-v0.1/ttyd-linux-x86_64.tar.gz"
+    sha256 = "bd5f708a0fa2fd4a4f33c25a06e8d08a03440cb664c17b86341b9986b32f6335"
+
+[[WebTerminal]]
+git-tree-sha1 = "ce05778324023ca714a835d3a59e9b50aa744ff6"
+os = "windows"
+arch = "x86_64"
+
+    [[WebTerminal.download]]
+    url = "https://github.com/JamieMair/WebTerminal.jl/releases/download/alpha-v0.1/ttyd-win-x86.tar.gz"
+    sha256 = "a7634e2129fe190d22f8033711dd14c8700d5a459c795ad22938e9216878b0f4"
+
+[[WebTerminal]]
+git-tree-sha1 = "9b8a7d0ee8823bf982acc1d412d758be64823595"
+os = "linux"
+arch = "aarch64"
+
+    [[WebTerminal.download]]
+    url = "https://github.com/JamieMair/WebTerminal.jl/releases/download/alpha-v0.1/ttyd-linux-aarch64.tar.gz"
+    sha256 = "74d319a1ba6f89c768cf0232542fa21ed15e5acbcc15f68dc47e1896bd6d31b8"
